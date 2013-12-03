@@ -1,0 +1,195 @@
+﻿<common:LayoutAwarePage
+    x:Name="PageRoot"
+    x:Class="WinInstagram.Views.ProfileView"
+    DataContext="{Binding DefaultViewModel,  RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:common="using:WinInstagram.Common"
+    xmlns:customControls="using:WinInstagram.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource
+            x:Name="DataViewSource"
+            Source="{Binding MediaGroup.Items}"
+            />
+    </Page.Resources>
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource DefaultAppBg }">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackButton" Margin="0 0 0 0" Click="GoBack" VerticalAlignment="Center" IsEnabled="{Binding Frame.CanGoBack, ElementName=PageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding MediaGroup.GroupTitle}" Grid.Column="1" FontSize="22"  VerticalAlignment="Center" Margin="10 0 0 0" />
+            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="10 0 0 0">
+                <TextBlock x:Name="RelationshipText" Grid.Column="1"  Grid.Row="1" FontSize="14"    VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Foreground="{StaticResource LightGreen}" DoubleTapped="RelationshipDoubleTapped"/>
+                <ProgressRing x:Name="LoadingStatus"  Grid.Column="1"  Grid.Row="1" IsActive="True"  Width="16" Margin="5 0 0 0" HorizontalAlignment="Left"  Foreground="{StaticResource  LightGreen}" Visibility="Collapsed"></ProgressRing>
+            </StackPanel>
+            <StackPanel x:Name="LoadingBar" Grid.Column="3" Margin="20 0 0 0" Visibility="Collapsed" VerticalAlignment="Center">
+                <ProgressBar IsIndeterminate="True"  ></ProgressBar>
+                <TextBlock Style="{StaticResource DefaulTextStyle}" Foreground="{StaticResource MediaSection}" x:Uid="LUserProfile" ></TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <Popup x:Name="RightBar" IsLightDismissEnabled="True">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Border x:Name="PopupContainer"  Background="#e5e5e5"  >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button  Click="HidePopUp" IsEnabled="True" Margin="5" Style="{StaticResource BackButtonStyle}"/>
+
+                    <customControls:MediaInfo Visibility="Collapsed" ViewingProfile="True"  FlipViewMediaSource="{Binding MediaGroup.Items}"   x:Name="MediaInfoContent" Grid.Row="1" ParentFrame="{Binding ElementName=PageRoot, Path=Frame}"/>
+                    <Grid Margin="10" x:Name="RelationshipInfo" Grid.Row="1"  Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="BarTitle" Grid.Row="0" Text="{Binding Title}" Style="{StaticResource DefaulTextStyle}" FontSize="22" HorizontalAlignment="Left"/>
+                        <ProgressRing  Grid.Row="1" x:Name="RightBarLoading"  Visibility="Collapsed" Width="50" IsActive="True" Height="50" Foreground="{StaticResource MediaSection}" ></ProgressRing>
+                        <ListView
+                          x:Name="UsersListView"
+                          Grid.Row="2"
+                          DataContext="{Binding UsersList}"
+                          ItemsSource="{Binding Users}"
+                          Visibility="Collapsed"
+                          SelectionMode="None"
+                          IsItemClickEnabled="True"
+                          ItemClick="NavigateToUser"
+                     >
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Vertical"></VirtualizingStackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Image Width="50" Grid.RowSpan="2" Height="50" Source="{Binding ProfilePicture}"/>
+                                        <TextBlock Margin="5 0 0 0" Grid.Column="1" Text="{Binding UserName}" Style="{StaticResource UserNameLink}"/>
+                                        <TextBlock  Margin="5 0 0 0" Grid.Row="1" Grid.Column="1" Text="{Binding FullName}"  Style="{StaticResource InformationText}" Foreground="{StaticResource DarkGray}" FontSize="12"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Popup>
+
+        <!-- Main View -->
+        <GridView
+            x:Name="UserGridView"
+            Grid.Row="1"
+            ItemsSource="{Binding Source={StaticResource DataViewSource}}"
+            SelectionMode="None"
+            IsSwipeEnabled="True"
+            IsItemClickEnabled="True"
+            ItemClick="ShowMediaInfo"
+            ItemTemplate="{StaticResource ImageItem}"
+            Visibility="Collapsed"
+            >
+
+            <GridView.HeaderTemplate>
+                <DataTemplate >
+                    <Grid DataContext="{Binding UserModel.User}" Width="400" Margin="20 0 20 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Ellipse Grid.Column="0"  VerticalAlignment="Center" Width="120" Height="120" HorizontalAlignment="Center"  >
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="UserProfilePicture"  ImageSource="{Binding ProfilePicture}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+
+                            <StackPanel Margin="5 0 0 0" Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBlock Text="{Binding FullName}" HorizontalAlignment="Left"
+                                           Style="{StaticResource UserNameLink}"  FontSize="33" />
+                                <TextBlock Text="{Binding UserName}" HorizontalAlignment="Left"
+                                           Style="{StaticResource DefaulTextStyle}" FontSize="25" />
+                                <TextBlock Margin="0 5 0 0" TextWrapping="Wrap" Text="{Binding Bio}"  Grid.Row="2" Grid.ColumnSpan="2"
+                                           Style="{StaticResource DefaulTextStyle}" FontSize="15" />
+                            </StackPanel>
+                        </Grid>
+
+                        <customControls:Counts FollowersClick="ShowFollowers" FollowedClick="ShowFollowedBy" Grid.Row="2" Grid.ColumnSpan="2" Height="60" Count="{Binding Counts}"
+                                               HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                               x:Name="UserCount" />
+                    </Grid>
+
+                </DataTemplate>
+            </GridView.HeaderTemplate>
+        </GridView>
+
+        <!-- VisualStates-->
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape" />
+                <VisualState x:Name="Filled" />
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PageTitle"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+</common:LayoutAwarePage>
+

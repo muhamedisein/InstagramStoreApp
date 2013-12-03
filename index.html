@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script type='text/javascript'>
+            function SayGoodbye() 
+            {
+                if(location.hash != ""){
+                    
+                     window.external.notify(location.hash); 
+                }
+                else{
+                    var code = location.search.split("=")[1];
+                    window.external.notify(code); 
+                }
+            }
+        </script>
+    </head>
+    <body>
+    <script>
+           SayGoodbye();
+     </script>
+    </body>
+</html>

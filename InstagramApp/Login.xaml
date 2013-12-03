@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="WinInstagram.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid x:Name="MainContent" Background="{StaticResource DefaultAppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock x:Name="LoginText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">To continue, please log  in into your Instagram account:</TextBlock>
+            <ProgressBar x:Name="LoadingBar" IsIndeterminate="True" Visibility="Collapsed"></ProgressBar>
+        </Grid>
+        <WebView x:Name="LoginWebView" Grid.Row="1"></WebView>
+    </Grid>
+</Page>

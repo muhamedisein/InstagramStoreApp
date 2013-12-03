@@ -1,0 +1,248 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+  
+
+    <Style x:Name="InformationText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Bold"></Setter>
+        <Setter Property="Foreground" Value="#24c0eb"></Setter>
+        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+    </Style>
+
+    <!--Color Palette-->
+
+    <Color x:Key="DarkerBlue">#4180AB</Color>
+    <Color x:Key="MidBlue">#8AB3CF</Color>
+    <Color x:Key="BrownGray">#515151</Color>
+    <Color x:Key="MetroBlue">#00B4FF</Color>
+    <Color x:Key="QWhite">#EEEEEE</Color>
+    <Color x:Key="Green">#56a076</Color>
+    <Color x:Key="DarkGreen">#1e9651</Color>
+    <Color x:Key="MidDarkGreen">#48ad73</Color>
+    <Color x:Key="HighLightBlue1">#52daff</Color>
+    <!--Color Palette -->
+
+
+
+    
+    
+
+    <SolidColorBrush x:Key="DefaultAppBg" Color="{StaticResource QWhite}" />
+    <SolidColorBrush x:Key="DarkGray" Color="#2b2b2b" />
+    <SolidColorBrush x:Name="DarkGreyHighLight" Color="#727272"></SolidColorBrush>
+    <SolidColorBrush x:Name="DarkGrayPressed" Color="#1b1b1b"></SolidColorBrush>
+    <SolidColorBrush x:Name="MediaSection" Color="#26ade4"></SolidColorBrush>
+    <SolidColorBrush x:Name="LightGreen" Color="#8ec200"></SolidColorBrush>
+    <SolidColorBrush x:Name="Red" Color="#db3156"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="GreenSb" Color="{StaticResource DarkGreen}" />
+    <SolidColorBrush x:Key="LightGreenSb" Color="{StaticResource MidDarkGreen}" />
+    <SolidColorBrush x:Key="DarkBlueFontColor" Color="#5e6d81" />
+    <SolidColorBrush x:Key="SkyBlue" Color="#14b9d6" />
+    <SolidColorBrush x:Key="Orange" Color="#f27935" />
+    <SolidColorBrush x:Key="LightBlue" Color="#52daff"/>
+    <LinearGradientBrush x:Key="DefaultGradientBlue" StartPoint="0.5, 0" EndPoint="0.5,1">
+        <GradientStop Color="{StaticResource DarkerBlue}" Offset="0" />
+        <GradientStop Color="#4180AB" Offset="1" />
+    </LinearGradientBrush>
+
+
+
+    <Style x:Key="DefaulTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="#424242"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="FontFamily" Value="Segoe UI Light"></Setter>
+        <Setter Property="Typography.StylisticSet20" Value="True" />
+        <Setter Property="Typography.DiscretionaryLigatures" Value="True" />
+        <Setter Property="Typography.CaseSensitiveForms" Value="True" />
+    </Style>
+
+
+    <Style x:Name="UserNameLink" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Bold"></Setter>
+        <Setter Property="Foreground" Value="#24c0eb"></Setter>
+        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+    </Style>
+
+
+    <Style x:Key="StrongWhite" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+
+    </Style>
+
+    <Style x:Key="SeperatorStyle" TargetType="Rectangle">
+        <Setter Property="Opacity" Value="0.2" />
+        <Setter Property="Fill" Value="Black" />
+    </Style>
+
+
+    <Style x:Key="MenuButton" TargetType="ButtonBase">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid x:Name="MainBG"  Background="#3a3a3a">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ContentPresenter x:Name="Text"  Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <Border Grid.Column="1" Background="#4180aa" Width="8" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MainBG" Storyboard.TargetProperty="Background" Duration="0:0:0.3" >
+                                            <DiscreteObjectKeyFrame Value="{StaticResource DarkGreyHighLight}"  KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MainBG" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame Value="{StaticResource DarkGrayPressed}" KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+    <Style x:Key="ImagListItem" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid Width="30" Height="40" Margin="0 0 5 0" Background="Transparent" ToolTipService.ToolTip="{Binding UserName}">
+                        <Image  x:Name="Img" Source="{Binding ProfilePicture}" ></Image>
+                        <Rectangle x:Name="LightRec" Fill="White" Opacity="0"></Rectangle>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="LightRec" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"></DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="LightRec" Storyboard.TargetProperty="Opacity" To="0.4"  Duration="0:0:0.2"></DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected"/>
+
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListBox" x:Key="CustomListStyle">
+
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Foreground" Value="Transparent"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ScrollViewer x:Name="ScrollViewer" >
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="RefreshButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid x:Name="grid">
+                        <Image x:Name="Img" Source="ms-appx:///Assets/Refresh.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="rotateTransform" CenterX="30" CenterY="30"/>
+                            </Image.RenderTransform>
+                        </Image>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="Angle" Storyboard.TargetName="rotateTransform" To="180" Duration="0:0:0.6" RepeatBehavior="Forever">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+
+
+                                <VisualState x:Name="Pressed">
+
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="MuhamedIseinWinInstagram" Publisher="CN=Muhamed" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>WinInstagram</DisplayName>
+    <PublisherDisplayName>Muhamed</PublisherDisplayName>
+    <Logo>Assets/StoreLogo.jpg</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="WinInstagram">
+      <VisualElements DisplayName="WinInstagram" Logo="Assets/Logo.jpg" SmallLogo="Assets/SmallLogo.jpg" Description="App for hipsters" ForegroundText="light" BackgroundColor="#d8d8d8">
+        <DefaultTile ShowName="logoOnly" ShortName="WinInstagram" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+        </InitialRotationPreference>
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
